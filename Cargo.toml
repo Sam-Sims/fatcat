@@ -1,0 +1,16 @@
+[package]
+name = "fatcat"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+clap = { version = "4.4.11", features = ["derive"] }
+minus = { version = "5.5.1", features = ["dynamic_output"] }
+noodles = { version = "0.60.0", features = ["fastq"] }
+niffler = { version = "2.5.0", default-features = false, features = ["gz", "bz2", "gz_cloudflare_zlib"] }
+time = "0.3.30"
+boxy = "0.1.0"
+crossterm = "0.27.0"
+textwrap = "0.16.0"
