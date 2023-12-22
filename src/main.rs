@@ -25,12 +25,14 @@ fn parse_fastq(path: &str) -> fastq::Reader<BufReader<Box<dyn Read>>>{
 }
 fn print_wrapped_text<W: Write>(writer: &mut W, text: &str, width: usize) {
     let side = boxy::Char::vertical(boxy::Weight::Normal);
-    let initial_indent = 10; // Adjust as needed
+    let initial_indent = 0; // Adjust as needed
     let wrapped_text = wrap(text, width - initial_indent)
         .iter()
         .map(|line| format!("{:indent$}{}", "", line, indent = initial_indent))
         .collect::<Vec<_>>()
         .join("\n");
+    // make the wrapped text red
+    //let wrapped_text = wrapped_text.stylize().with(Color::Blue).to_string();
     let vertical_line_width = 1;
     let read_num_width = 8;
     for wrapped_line in wrapped_text.lines() {
@@ -90,7 +92,13 @@ fn process_fastq(pager: &mut Pager, fastq_path: &str, h_size: u16){
         let average_phred = avr_q_score(qual_string);
 
         // Finally print the record
-        pager.push_str(format!("{} {} {} {} {}", read_name_string.stylize().dark_green(), "Length:".stylize().dark_grey(), seq_len.to_string().stylize().dark_grey(), "| Q:".stylize().dark_grey(), average_phred.to_string().stylize().dark_grey()));
+        //if q score is below 20, print in red
+        if average_phred < 20.0 {
+            pager.push_str(format!("{} {} {} {} {}", read_name_string.stylize().red(), "Length:".stylize().dark_grey(), seq_len.to_string().stylize().dark_grey(), "| Q:".stylize().dark_grey(), average_phred.to_string().stylize().red()));
+        } else {
+            pager.push_str(format!("{} {} {} {} {}", read_name_string.stylize().dark_green(), "Length:".stylize().dark_grey(), seq_len.to_string().stylize().dark_grey(), "| Q:".stylize().dark_grey(), average_phred.to_string().stylize().dark_grey()));
+        }
+        //pager.push_str(format!("{} {} {} {} {}", read_name_string.stylize().dark_green(), "Length:".stylize().dark_grey(), seq_len.to_string().stylize().dark_grey(), "| Q:".stylize().dark_grey(), average_phred.to_string().stylize().dark_grey()));
         pager.push_str("\n");
         print_wrapped_text(pager, seq_string, h_size as usize);
         sleep(Duration::from_millis(100));

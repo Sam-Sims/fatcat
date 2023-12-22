@@ -7,7 +7,7 @@ edition = "2021"
 
 [dependencies]
 clap = { version = "4.4.11", features = ["derive"] }
-minus = { version = "5.5.1", features = ["dynamic_output"] }
+minus = { version = "=5.5.3", features = ["dynamic_output"] }
 noodles = { version = "0.60.0", features = ["fastq"] }
 niffler = { version = "2.5.0", default-features = false, features = ["gz", "bz2", "gz_cloudflare_zlib"] }
 time = "0.3.30"

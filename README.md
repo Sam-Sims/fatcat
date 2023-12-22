@@ -8,7 +8,7 @@ Like `zcat reads.fastq.gz | less` but nicer.
 
 Kind of a gimmick, mildly useful.
 
-![fatcat](img/terminal.png)
+![fatcat](img/terminal2.png)
 
 ## Installation
 
