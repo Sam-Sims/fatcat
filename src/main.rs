@@ -25,7 +25,7 @@ fn parse_fastq(path: &str) -> fastq::Reader<BufReader<Box<dyn Read>>>{
 }
 fn print_wrapped_text<W: Write>(writer: &mut W, text: &str, width: usize) {
     let side = boxy::Char::vertical(boxy::Weight::Normal);
-    let initial_indent = 0; // Adjust as needed
+    let initial_indent = 10; // Adjust as needed
     let wrapped_text = wrap(text, width - initial_indent)
         .iter()
         .map(|line| format!("{:indent$}{}", "", line, indent = initial_indent))
